@@ -8,9 +8,8 @@
 
 import UIKit
 
-class ActiveGamesViewController: UIViewController {
+class GameListViewController: UIViewController {
     
-    private let archiveButtonText = "Archive"
     private let okButtonText = "OK"
     private let cancelButtonText = "Cancel"
     private let deleteButtonText = "Delete"
@@ -21,11 +20,11 @@ class ActiveGamesViewController: UIViewController {
 }
 
 // MARK: - View lifecycle
-extension ActiveGamesViewController {
+extension GameListViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         activeGamesTableView.dataSource = self
         activeGamesTableView.delegate = self
         
@@ -38,30 +37,43 @@ extension ActiveGamesViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
         
-        if segue.identifier == Constants.SegueIds.activeGame {
-            if let activeGameViewController = segue.destination as? ActiveGameViewController, let indexPath = activeGamesTableView.indexPathForSelectedRow {
+        if segue.identifier == Constants.SegueIds.game {
+            if let activeGameViewController = segue.destination as? GameViewController, let indexPath = activeGamesTableView.indexPathForSelectedRow {
                 activeGameViewController.game = games[indexPath.row]
+                activeGameViewController.hidesBottomBarWhenPushed = true
+                activeGamesTableView.deselectRow(at: indexPath, animated: false)
             }
         }
     }
 }
 
+// MARK: - IB Actions
+extension GameListViewController {
+    
+    @IBAction func newGameBtnTapped(_ sender: Any) {
+        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createGameModal")
+        vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+        vc.modalTransitionStyle = UIModalTransitionStyle.coverVertical
+        present(vc, animated: true, completion: nil)
+    }
+}
+
 // MARK: - UITableViewDataSource
-extension ActiveGamesViewController: UITableViewDataSource {
+extension GameListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return games.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellIds.activeGamesTable) as! ActiveGamesTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellIds.gameListTable) as! GameListTableViewCell
         cell.game = games[indexPath.row]
         return cell
     }
 }
 
 // MARK: - UITableViewDelegate
-extension ActiveGamesViewController: UITableViewDelegate {
+extension GameListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
@@ -69,11 +81,7 @@ extension ActiveGamesViewController: UITableViewDelegate {
             self.tableView(tableView, deleteItemAt: indexPath)
         }
         
-        let archive = UITableViewRowAction(style: .normal, title: archiveButtonText) { (action, index) in
-            self.tableView(tableView, archiveItemAt: indexPath)
-        }
-        
-        return [archive, delete]
+        return [delete]
     }
     
     @available(iOS 11.0, *)
@@ -83,11 +91,7 @@ extension ActiveGamesViewController: UITableViewDelegate {
             self.tableView(tableView, deleteItemAt: indexPath)
         }
         
-        let archive = UIContextualAction(style: .normal, title: archiveButtonText) { (action, sourceView, completionHandler) in
-            self.tableView(tableView, archiveItemAt: indexPath)
-        }
-        
-        let swipeAction = UISwipeActionsConfiguration(actions: [archive, delete])
+        let swipeAction = UISwipeActionsConfiguration(actions: [delete])
         swipeAction.performsFirstActionWithFullSwipe = false
         return swipeAction
     }
@@ -99,15 +103,10 @@ extension ActiveGamesViewController: UITableViewDelegate {
             GameService.shared.deleteGame(self.games[indexPath.row])
             self.games.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .automatic)
-
-            //TODO: Should work but doesnt
-            //tableView.setEditing(false, animated: true)
             tableView.reloadData()
         }))
         
         refreshAlert.addAction(UIAlertAction(title: cancelButtonText, style: .cancel, handler: { (action: UIAlertAction!) in
-            //TODO: Should work but doesnt
-            //tableView.setEditing(false, animated: true)
             tableView.reloadData()
         }))
         tableView.isEditing = false
@@ -129,11 +128,10 @@ extension ActiveGamesViewController: UITableViewDelegate {
 }
 
 // MARK: - Notification handling
-private extension ActiveGamesViewController {
+private extension GameListViewController {
     private func addNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(onNewGameCreated(_:)), name: .gameCreated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(onGameEdited(_:)), name: .gameEdited, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(onGameReactivated(_:)), name: .gameReactivated, object: nil)
     }
     
     @objc private func onNewGameCreated(_ notification: NSNotification) {
@@ -141,7 +139,7 @@ private extension ActiveGamesViewController {
             games.append(game)
             activeGamesTableView.insertRows(at: [IndexPath(row: games.count - 1, section: 0)], with: .middle)
             activeGamesTableView.selectRow(at: IndexPath(row: games.count - 1, section: 0), animated: true, scrollPosition: .middle)
-            performSegue(withIdentifier: Constants.SegueIds.activeGame, sender: self)
+            performSegue(withIdentifier: Constants.SegueIds.game, sender: self)
             tabBarController?.selectedIndex = 0
         }
     }
@@ -149,11 +147,5 @@ private extension ActiveGamesViewController {
     @objc private func onGameEdited(_ notification: NSNotification) {
         activeGamesTableView.reloadData()
     }
-    
-    @objc private func onGameReactivated(_ notification: NSNotification) {
-        if let game = notification.userInfo?[Constants.NotificationKeys.game] as? Game {
-            games.append(game)
-            activeGamesTableView.insertRows(at: [IndexPath(row: games.count - 1, section: 0)], with: .middle)
-        }
-    }
+
 }

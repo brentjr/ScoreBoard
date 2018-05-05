@@ -8,25 +8,21 @@
 
 import UIKit
 
-enum ModifyPointsOperation {
-    
-    case add
-    case subtract
-}
-
 protocol ModifyPointsViewControllerDelegate {
     
-    func pointsModified(operation: ModifyPointsOperation, value: Int, player: Player)
+    func pointsModified(value: Int)
+    func pointsDeleted()
 }
 
 class ModifyPointsViewController: UIViewController {
     
-    var player: Player!
     var delegate: ModifyPointsViewControllerDelegate!
+    var originalValue: Int?
     
     private let clear = "C"
     private let zero = "0"
-    private let delete = "←"
+//    private let delete = "←"
+    private let delete = "+/-"
     private let numberOfSections = 4
     private let numberOfRows = 3
     
@@ -43,24 +39,28 @@ extension ModifyPointsViewController {
         numbersCollectionView.dataSource = self
         numbersCollectionView.delegate = self
         
-        pointsLabel.text = zero
+        if let originalValue = originalValue {
+            pointsLabel.text = "\(originalValue)"
+        } else {
+            pointsLabel.text = zero
+        }
     }
 }
 
 // MARK: - IBActions
 extension ModifyPointsViewController {
     
-    @IBAction private func addBtnTapped(_ sender: Any) {
-        if let delegate = delegate, let player = player, let points = pointsLabel.text {
-            delegate.pointsModified(operation: .add, value: Int(points)!, player: player)
+    @IBAction private func enterBtnTapped(_ sender: Any) {
+        if let delegate = delegate, let points = pointsLabel.text {
+            delegate.pointsModified(value: 0 + Int(points)!)
         }
         pointsLabel.text = zero
         dismiss(animated: true, completion: nil)
     }
     
-    @IBAction  private func subtractBtnTapped(_ sender: Any) {
-        if let delegate = delegate, let player = player, let points = pointsLabel.text  {
-            delegate.pointsModified(operation: .subtract, value: Int(points)!, player: player)
+    @IBAction private func deleteBtnTapped(_ sender: Any) {
+        if let delegate = delegate {
+            delegate.pointsDeleted()
         }
         pointsLabel.text = zero
         dismiss(animated: true, completion: nil)
@@ -120,11 +120,18 @@ extension ModifyPointsViewController: UICollectionViewDelegate {
             }
             
         case (3, 2):
-            if pointsLabel.text?.count == 1 {
-                pointsLabel.text = zero
-            } else if pointsLabel.text != zero {
-                pointsLabel.text = String(pointsLabel.text!.dropLast())
+            if pointsLabel.text != zero {
+                if pointsLabel.text!.first == "-" {
+                    pointsLabel.text?.remove(at: pointsLabel.text!.startIndex)
+                } else {
+                    pointsLabel.text = "-" + pointsLabel.text!
+                }
             }
+//            if pointsLabel.text?.count == 1 {
+//                pointsLabel.text = zero
+//            } else if pointsLabel.text != zero {
+//                pointsLabel.text = String(pointsLabel.text!.dropLast())
+//            }
             
         default:
             let cell = collectionView.cellForItem(at: indexPath) as! ModifyPointsItemCell

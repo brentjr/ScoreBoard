@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ActiveGamesTableViewCell: UITableViewCell {
+class GameListTableViewCell: UITableViewCell {
     
     var game: Game? {
         didSet {
@@ -20,30 +20,34 @@ class ActiveGamesTableViewCell: UITableViewCell {
             }
             
             // Title
-            titleLabel.text = game.title
+            titleLabel.text = game.title?.uppercased()
             
             // Date
-            // TODO: format date based on how old it is
             if let date = game.createdDate as Date? {
+                let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
                 let dateFormatter = DateFormatter()
-                dateFormatter.dateStyle = .none
-                dateFormatter.timeStyle = .short
-                //            dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yy")
+                
+                if calendar.isDateInToday(date) {
+                    dateFormatter.dateStyle = .none
+                    dateFormatter.timeStyle = .short
+                } else {
+                    dateFormatter.setLocalizedDateFormatFromTemplate("MM/dd/yy")
+                }
+
                 dateLabel.text = dateFormatter.string(from: date)
             } else {
                 dateLabel.text = ""
             }
             
-            // Players
-            var playerNames: [String] = []
-            if let players = game.players {
-                for player in players {
-                    if let playerName = (player as! Player).name {
-                        playerNames.append(playerName)
-                    }
-                }
+            // Status
+            if game.isComplete {
+                let winner = game.winnersString()
+                playersLabel.textColor = UIColor(red: (218/255.0), green: (165/255.0), blue: (32/255.0), alpha: 1.0)
+                playersLabel.text = "Winner: \(winner)"
+            } else {
+                playersLabel.textColor = UIColor.black
+                playersLabel.text = "Game in progress"
             }
-            playersLabel.text = playerNames.joined(separator: ", ")
         }
     }
 

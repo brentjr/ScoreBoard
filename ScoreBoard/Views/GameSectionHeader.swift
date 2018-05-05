@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ActiveGameSectionHeader: UICollectionReusableView {
+class GameSectionHeader: UICollectionReusableView {
     
     var player: Player? {
         didSet {
@@ -19,16 +19,7 @@ class ActiveGameSectionHeader: UICollectionReusableView {
             }
             
             playerNameLabel.text = player.name
-            
-            var total = 0
-            if let pointList = player.points {
-                for pointItem in pointList {
-                    total += pointItem
-                }
-                totalScoreHeader.text = "\(total)"
-            } else {
-                totalScoreHeader.text = "\(0)"
-            }
+            totalScoreHeader.text = "\(player.totalScore())"
         }
     }
     
@@ -37,10 +28,13 @@ class ActiveGameSectionHeader: UICollectionReusableView {
 }
 
 //MARK: - View lifecycle
-extension ActiveGameSectionHeader {
+extension GameSectionHeader {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+//        totalScoreHeader.layer.borderColor = UIColor.brown.cgColor
+//        totalScoreHeader.layer.borderWidth = 1.0
         
         let bottomLine = CALayer()
         bottomLine.frame = CGRect(x: 0, y: frame.height - 1, width: frame.width, height: 1)

@@ -9,15 +9,19 @@
 import UIKit
 
 class CreateGameViewController: UIViewController {
-    
+
     var game: Game?
-    
+
     private let editGameTitleText = "Edit Game"
     private let newGameTitleText = "New Game"
     private let editGameBackButtonText = "Back"
     private let newGameBackButtonText = "Cancel"
-    private let playersTableRowHeight = 44
-    
+    private var playersTableRowHeight: CGFloat {
+        get {
+            return 44
+        }
+    }
+
     private var isNewGame = true
     @IBOutlet private weak var backButton: UIBarButtonItem!
     @IBOutlet private weak var titleTextField: UITextField!
@@ -26,10 +30,12 @@ class CreateGameViewController: UIViewController {
     @IBOutlet private weak var addPlayerTextField: UITextField!
     @IBOutlet private weak var addPlayerButton: UIButton!
     @IBOutlet private weak var scrollView: UIScrollView!
-    
+    @IBOutlet private weak var playerOrderSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var winConditionSegmentedControl: UISegmentedControl!
+
     private func setPlayersTableViewConstraints() {
         if let players = game?.players {
-            playersTableViewHeightConstraint.constant = CGFloat(playersTableRowHeight * players.count)
+            playersTableViewHeightConstraint.constant = playersTableRowHeight * CGFloat(players.count)
         } else {
             playersTableViewHeightConstraint.constant = 0
         }
@@ -38,26 +44,54 @@ class CreateGameViewController: UIViewController {
 
 // MARK: - View lifecycle
 extension CreateGameViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        scrollView.isScrollEnabled = true
+
         playersTableView.dataSource = self
         setPlayersTableViewConstraints()
-        
+
         if let game = game {
             title = editGameTitleText
             isNewGame = false
             navigationItem.rightBarButtonItem = nil
             backButton.title = editGameBackButtonText
             titleTextField.text = game.title
+            playerOrderSegmentedControl.selectedSegmentIndex = Int(game.playerDisplayOrder)
+            winConditionSegmentedControl.selectedSegmentIndex = Int(game.winCondition)
         } else {
             title = newGameTitleText
             backButton.title = newGameBackButtonText
             game = GameService.shared.emptyGame()
+            game!.playerDisplayOrder = Int16(playerOrderSegmentedControl.selectedSegmentIndex)
+            game!.winCondition = Int16(winConditionSegmentedControl.selectedSegmentIndex)
         }
-        
+
         addNotificationObservers()
+    }
+}
+
+// MARK: - UITableViewDataSource
+extension CreateGameViewController: UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return game?.players?.count ?? 0
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellIds.createGamePlayersTable) as! EditPlayersTableViewCell
+
+        if let player = game?.players?.allObjects[indexPath.row] as? Player {
+            cell.player = player
+            cell.delegate = self
+        } else {
+            cell.player = nil
+            cell.delegate = nil
+        }
+
+        return cell
     }
 }
 
@@ -69,40 +103,22 @@ extension CreateGameViewController: EditPlayersTableViewCellDelegate {
             return
         }
         
-        let indexPath = playersTableView.indexPath(for: cell)
-        let mutable = players.mutableCopy() as! NSMutableSet
-        mutable.remove(players.allObjects[indexPath!.row])
-        game.players = (mutable.copy() as! NSSet)
-        playersTableView.deleteRows(at: [indexPath!], with: .automatic)
-        setPlayersTableViewConstraints()
+        let alert = UIAlertController(title: "Are you sure?", message: "User scores will be deleted forever.", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Delete", style: .default, handler: { (action: UIAlertAction!) in
+            let indexPath = self.playersTableView.indexPath(for: cell)
+            let mutable = players.mutableCopy() as! NSMutableSet
+            mutable.remove(players.allObjects[indexPath!.row])
+            game.players = (mutable.copy() as! NSSet)
+            self.playersTableView.deleteRows(at: [indexPath!], with: .automatic)
+            self.setPlayersTableViewConstraints()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
 }
-
-// MARK: - UITableViewDataSource
-extension CreateGameViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let players = game?.players else {
-            return 0
-        }
-        
-        return players.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.CellIds.createGamePlayersTable) as! EditPlayersTableViewCell
-        
-        if let player = game?.players?.allObjects[indexPath.row] as? Player {
-            cell.player = player
-            cell.delegate = self
-            return cell
-        } else {
-            cell.player = nil
-            return cell
-        }
-    }
-}
-
 
 // MARK: - IBActions
 private extension CreateGameViewController {
@@ -125,7 +141,7 @@ private extension CreateGameViewController {
         }
         
         game.title = title
-            
+        
         let notificationDict: [String: Game] = [Constants.NotificationKeys.game: GameService.shared.insertGame(game)]
         NotificationCenter.default.post(name: .gameCreated, object: self, userInfo: notificationDict)
         dismiss(animated: true, completion: nil)
@@ -150,12 +166,26 @@ private extension CreateGameViewController {
         addPlayerTextField.text = ""
         addPlayerTextField.resignFirstResponder()
     }
+    
+    @IBAction private func playerOrderSegmentedControlChanged(_ sender: Any) {
+        guard let game = game else {
+            return
+        }
+        game.playerDisplayOrder = Int16(playerOrderSegmentedControl.selectedSegmentIndex)
+    }
+    
+    @IBAction private func winConditionSegmentedControlChanged(_ sender: Any) {
+        guard let game = game else {
+            return
+        }
+        game.winCondition = Int16(winConditionSegmentedControl.selectedSegmentIndex)
+    }
 }
 
 // MARK: - User input validation
 private extension CreateGameViewController {
     
-    func isValid(playerName: String) -> Bool {
+    private func isValid(playerName: String) -> Bool {
         if playerName.isEmpty {
             return false
         }
@@ -171,19 +201,30 @@ private extension CreateGameViewController {
     
     private func addNotificationObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardShown(notification:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(onKeyboardHide(notification:)), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     @objc private func onKeyboardShown(notification: NSNotification) {
-        //Need to calculate keyboard exact size due to Apple suggestions
-        scrollView.isScrollEnabled = true
         let info = notification.userInfo! as NSDictionary
         let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height + CGFloat(10), 0.0)
         
         scrollView.contentInset = contentInsets
         scrollView.scrollIndicatorInsets = contentInsets
         
-        var aRect : CGRect = self.view.frame
+        var aRect: CGRect = self.view.frame
         aRect.size.height -= keyboardSize!.height
+    }
+    
+    @objc private func onKeyboardHide(notification: NSNotification) {
+        let info = notification.userInfo! as NSDictionary
+        let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        
+        scrollView.contentInset = contentInsets
+        scrollView.scrollIndicatorInsets = contentInsets
+        
+        var aRect: CGRect = self.view.frame
+        aRect.size.height += keyboardSize!.height
     }
 }

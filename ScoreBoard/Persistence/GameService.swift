@@ -43,6 +43,8 @@ final class GameService {
     
     func allGames() -> [Game] {
         let fetchRequest = NSFetchRequest<Game>(entityName: "Game")
+        let sort = NSSortDescriptor(key: #keyPath(Game.createdDate), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest)
         } catch _ as NSError {
@@ -54,6 +56,8 @@ final class GameService {
     func activeGames() -> [Game] {
         let fetchRequest = NSFetchRequest<Game>(entityName: "Game")
         fetchRequest.predicate = NSPredicate(format: "isArchived == NO")
+        let sort = NSSortDescriptor(key: #keyPath(Game.createdDate), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest)
         } catch _ as NSError {
@@ -65,6 +69,8 @@ final class GameService {
     func archivedGames() -> [Game] {
         let fetchRequest = NSFetchRequest<Game>(entityName: "Game")
         fetchRequest.predicate = NSPredicate(format: "isArchived == YES")
+        let sort = NSSortDescriptor(key: #keyPath(Game.createdDate), ascending: true)
+        fetchRequest.sortDescriptors = [sort]
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest)
         } catch _ as NSError {

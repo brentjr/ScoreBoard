@@ -2,7 +2,7 @@
 //  Game+CoreDataProperties.swift
 //  ScoreBoard
 //
-//  Created by Brent Roberts on 1/9/18.
+//  Created by Brent Roberts on 3/23/18.
 //  Copyright © 2018 Gouda Labs. All rights reserved.
 //
 //
@@ -19,8 +19,10 @@ extension Game {
 
     @NSManaged public var createdDate: NSDate?
     @NSManaged public var isArchived: Bool
+    @NSManaged public var isComplete: Bool
+    @NSManaged public var playerDisplayOrder: Int16
     @NSManaged public var title: String?
-    @NSManaged public var winnerThing: Int16
+    @NSManaged public var winCondition: Int16
     @NSManaged public var players: NSSet?
 
 }

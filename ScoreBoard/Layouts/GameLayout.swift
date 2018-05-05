@@ -8,15 +8,8 @@
 
 import UIKit
 
-protocol ActiveGameLayoutDelegate: class {
+class GameLayout: UICollectionViewLayout {
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, headerInsetForItemAt indexPath: IndexPath) -> CGFloat
-}
-
-class ActiveGameLayout: UICollectionViewLayout {
-    
-    weak var delegate: ActiveGameLayoutDelegate!
-
     private enum Element: String {
         case sectionHeader
         case cell
@@ -127,8 +120,7 @@ class ActiveGameLayout: UICollectionViewLayout {
     
     private func updateSupplementaryViews(_ type: Element, attributes: UICollectionViewLayoutAttributes, collectionView: UICollectionView, indexPath: IndexPath) {
         if type == .sectionHeader {
-            let inset = delegate.collectionView(collectionView, layout: self, headerInsetForItemAt: indexPath)
-            attributes.transform =  CGAffineTransform(translationX: 0, y: collectionView.contentOffset.y + inset)
+            attributes.transform = CGAffineTransform(translationX: 0, y: collectionView.contentOffset.y)
         }
     }
 }

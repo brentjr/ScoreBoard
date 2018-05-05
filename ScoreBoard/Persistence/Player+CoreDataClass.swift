@@ -12,4 +12,14 @@ import CoreData
 
 @objc(Player)
 public class Player: NSManagedObject {
+    func totalScore() -> Int {
+        guard let pointList = points else {
+            return 0
+        }
+        var total = 0
+        for pointItem in pointList {
+            total += pointItem
+        }
+        return total
+    }
 }

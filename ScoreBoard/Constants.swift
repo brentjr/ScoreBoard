@@ -15,16 +15,16 @@ struct Constants {
     }
     
     struct CellIds {
-        static let activeGamesTable = "activeGamesTableViewCellID"
-        static let activeGameHeader = "activeGameSectionHeaderID"
-        static let activeGameItem = "activeGameItemCellID"
-        static let activeGameAddPoints = "activeGameAddPointsCell"
+        static let gameListTable = "activeGamesTableViewCellID"
+        static let gameHeader = "activeGameSectionHeaderID"
+        static let gameItem = "activeGameItemCellID"
+        static let gameAddPoints = "activeGameAddPointsCell"
         static let createGamePlayersTable = "playerTableViewCellID"
         static let modifyPointsCollection = "modifyPointsCollectionCellID"
     }
     
     struct SegueIds {
-        static let activeGame = "activeGameSegue"
+        static let game = "activeGameSegue"
         static let createGame = "createGameModal"
     }
     

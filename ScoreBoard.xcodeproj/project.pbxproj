@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		4E0FEC832002BE71008130ED /* ModifyPointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FEC822002BE71008130ED /* ModifyPointsViewController.swift */; };
 		4E0FEC8720040DDC008130ED /* ModifyPointsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FEC8620040DDC008130ED /* ModifyPointsItemCell.swift */; };
+		4E4A3C9D209F8F9A001C3549 /* GameSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A3C9C209F8F9A001C3549 /* GameSectionHeader.swift */; };
 		4E545E0E1FFDB0FB00C35BCE /* GameItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E545E0D1FFDB0FB00C35BCE /* GameItemCell.swift */; };
 		4E5CE10F1FFDFF2300AF889C /* GameLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E5CE10E1FFDFF2300AF889C /* GameLayout.swift */; };
 		4E723B212065618600877973 /* Game+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E723B202065618600877973 /* Game+CoreDataProperties.swift */; };
@@ -31,7 +32,7 @@
 		4ED1A7FB1FFB74F70010CA4E /* EditPlayersTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ED1A7FA1FFB74F70010CA4E /* EditPlayersTableViewCell.swift */; };
 		4EF5CA2320049D3400416E20 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CA2220049D3400416E20 /* Constants.swift */; };
 		4EF5CA2A20059F2F00416E20 /* GameWinnerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF5CA2920059F2F00416E20 /* GameWinnerView.swift */; };
-		4EF890E01FFEED5800E42E36 /* GameSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF890DF1FFEED5800E42E36 /* GameSectionHeader.swift */; };
+		4EF890E01FFEED5800E42E36 /* GameTotalScoreCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EF890DF1FFEED5800E42E36 /* GameTotalScoreCell.swift */; };
 		4EFB93DC201551FF000FEBC7 /* FireworkParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = 4EFB93DB201551FF000FEBC7 /* FireworkParticle.sks */; };
 		4EFF5C922000357A007AFD3F /* GameAddPointsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EFF5C912000357A007AFD3F /* GameAddPointsCell.swift */; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		4E0FEC822002BE71008130ED /* ModifyPointsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPointsViewController.swift; sourceTree = "<group>"; };
 		4E0FEC8620040DDC008130ED /* ModifyPointsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPointsItemCell.swift; sourceTree = "<group>"; };
+		4E4A3C9C209F8F9A001C3549 /* GameSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSectionHeader.swift; sourceTree = "<group>"; };
 		4E545E0D1FFDB0FB00C35BCE /* GameItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameItemCell.swift; sourceTree = "<group>"; };
 		4E5CE10E1FFDFF2300AF889C /* GameLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameLayout.swift; sourceTree = "<group>"; };
 		4E723B202065618600877973 /* Game+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Game+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -84,7 +86,7 @@
 		4ED1A7FA1FFB74F70010CA4E /* EditPlayersTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditPlayersTableViewCell.swift; sourceTree = "<group>"; };
 		4EF5CA2220049D3400416E20 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		4EF5CA2920059F2F00416E20 /* GameWinnerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameWinnerView.swift; sourceTree = "<group>"; };
-		4EF890DF1FFEED5800E42E36 /* GameSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSectionHeader.swift; sourceTree = "<group>"; };
+		4EF890DF1FFEED5800E42E36 /* GameTotalScoreCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTotalScoreCell.swift; sourceTree = "<group>"; };
 		4EFB93DB201551FF000FEBC7 /* FireworkParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireworkParticle.sks; sourceTree = "<group>"; };
 		4EFF5C912000357A007AFD3F /* GameAddPointsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameAddPointsCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -209,12 +211,13 @@
 		4E756EA91FF863EC00B9B37B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				4ED1A7FA1FFB74F70010CA4E /* EditPlayersTableViewCell.swift */,
 				4EFF5C912000357A007AFD3F /* GameAddPointsCell.swift */,
 				4E545E0D1FFDB0FB00C35BCE /* GameItemCell.swift */,
-				4EF890DF1FFEED5800E42E36 /* GameSectionHeader.swift */,
 				4E756EAA1FF8644B00B9B37B /* GameListTableViewCell.swift */,
+				4E4A3C9C209F8F9A001C3549 /* GameSectionHeader.swift */,
+				4EF890DF1FFEED5800E42E36 /* GameTotalScoreCell.swift */,
 				4EF5CA2920059F2F00416E20 /* GameWinnerView.swift */,
-				4ED1A7FA1FFB74F70010CA4E /* EditPlayersTableViewCell.swift */,
 				4E0FEC8620040DDC008130ED /* ModifyPointsItemCell.swift */,
 			);
 			path = Views;
@@ -380,8 +383,9 @@
 				4E0FEC8720040DDC008130ED /* ModifyPointsItemCell.swift in Sources */,
 				4ED1A7FB1FFB74F70010CA4E /* EditPlayersTableViewCell.swift in Sources */,
 				4ED1A7EA1FF8A5490010CA4E /* Player+CoreDataProperties.swift in Sources */,
-				4EF890E01FFEED5800E42E36 /* GameSectionHeader.swift in Sources */,
+				4EF890E01FFEED5800E42E36 /* GameTotalScoreCell.swift in Sources */,
 				4E756E791FF83A7A00B9B37B /* ScoreBoard.xcdatamodeld in Sources */,
+				4E4A3C9D209F8F9A001C3549 /* GameSectionHeader.swift in Sources */,
 				4E723B212065618600877973 /* Game+CoreDataProperties.swift in Sources */,
 				4EFF5C922000357A007AFD3F /* GameAddPointsCell.swift in Sources */,
 				4E756E711FF83A7A00B9B37B /* AppDelegate.swift in Sources */,

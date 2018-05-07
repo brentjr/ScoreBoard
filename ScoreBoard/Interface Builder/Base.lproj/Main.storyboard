@@ -129,18 +129,64 @@
                                     <outlet property="winnerNameLabel" destination="Cdi-nb-tKF" id="bGc-VP-BF7"/>
                                 </connections>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Yyo-pn-duV">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BCm-Dv-5Qz">
+                                <rect key="frame" x="0.0" y="139" width="375" height="30"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="KbE-u5-xMn"/>
+                                </constraints>
+                            </view>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Yyo-pn-duV">
                                 <rect key="frame" x="0.0" y="139" width="375" height="435"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="UVg-7a-ipq" customClass="GameLayout" customModule="ScoreBoard" customModuleProvider="target">
                                     <size key="itemSize" width="50" height="50"/>
-                                    <size key="headerReferenceSize" width="50" height="60"/>
+                                    <size key="headerReferenceSize" width="50" height="50"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="gameTotalScoreCellID" id="Ytx-KZ-LE7" customClass="GameTotalScoreCell" customModule="ScoreBoard" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="121" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="121" height="64"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="749" text="Player Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukf-Ug-sG2">
+                                                    <rect key="frame" x="13" y="8" width="95" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" translatesAutoresizingMaskIntoConstraints="NO" id="gH8-OG-o4d">
+                                                    <rect key="frame" x="13" y="33.5" width="95" height="22.5"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="gH8-OG-o4d" firstAttribute="centerX" secondItem="Ytx-KZ-LE7" secondAttribute="centerX" id="3wS-hf-waL"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="gH8-OG-o4d" secondAttribute="trailing" constant="5" id="5wY-LX-RmN"/>
+                                            <constraint firstItem="ukf-Ug-sG2" firstAttribute="centerX" secondItem="Ytx-KZ-LE7" secondAttribute="centerX" id="7Xo-AM-MNp"/>
+                                            <constraint firstItem="gH8-OG-o4d" firstAttribute="leading" secondItem="Ytx-KZ-LE7" secondAttribute="leadingMargin" constant="5" id="8S3-Pm-8E1"/>
+                                            <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="gH8-OG-o4d" secondAttribute="bottom" id="QDc-aG-nsX"/>
+                                            <constraint firstItem="gH8-OG-o4d" firstAttribute="top" secondItem="ukf-Ug-sG2" secondAttribute="bottom" constant="5" id="RmV-69-hMp"/>
+                                            <constraint firstItem="ukf-Ug-sG2" firstAttribute="top" secondItem="Ytx-KZ-LE7" secondAttribute="topMargin" id="XE8-tG-jgW"/>
+                                            <constraint firstItem="ukf-Ug-sG2" firstAttribute="leading" secondItem="Ytx-KZ-LE7" secondAttribute="leadingMargin" constant="5" id="cr2-Ot-K7c"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="ukf-Ug-sG2" secondAttribute="trailing" constant="5" id="ssD-ld-OjR"/>
+                                        </constraints>
+                                        <size key="customSize" width="121" height="64"/>
+                                        <connections>
+                                            <outlet property="playerNameLabel" destination="ukf-Ug-sG2" id="w7v-Wt-IQ7"/>
+                                            <outlet property="totalScoreHeader" destination="gH8-OG-o4d" id="vfk-CF-MLK"/>
+                                        </connections>
+                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="activeGameItemCellID" id="f27-Gd-byV" customClass="GameItemCell" customModule="ScoreBoard" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="60" width="102" height="50"/>
+                                        <rect key="frame" x="131" y="57" width="102" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="102" height="50"/>
@@ -177,7 +223,7 @@
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="activeGameAddPointsCell" id="5OH-Oe-Kxz" customClass="GameAddPointsCell" customModule="ScoreBoard" customModuleProvider="target">
-                                        <rect key="frame" x="112" y="60" width="100" height="50"/>
+                                        <rect key="frame" x="243" y="57" width="100" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                             <rect key="frame" x="0.0" y="0.0" width="100" height="50"/>
@@ -199,36 +245,24 @@
                                         <size key="customSize" width="100" height="50"/>
                                     </collectionViewCell>
                                 </cells>
-                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="activeGameSectionHeaderID" id="FgF-BZ-zy2" customClass="GameSectionHeader" customModule="ScoreBoard" customModuleProvider="target">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
-                                    <autoresizingMask key="autoresizingMask"/>
+                                <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="gameSectionHeaderID" id="yiX-qL-YhZ" customClass="GameSectionHeader" customModule="ScoreBoard" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Player Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ukf-Ug-sG2">
-                                            <rect key="frame" x="8" y="8" width="359" height="20.5"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
-                                            <nil key="textColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="749" text="Total" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="1" translatesAutoresizingMaskIntoConstraints="NO" id="gH8-OG-o4d">
-                                            <rect key="frame" x="164.5" y="31" width="46" height="24"/>
-                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apples" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEb-FL-RiD">
+                                            <rect key="frame" x="161" y="15" width="53" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
-                                        <constraint firstItem="gH8-OG-o4d" firstAttribute="centerX" secondItem="FgF-BZ-zy2" secondAttribute="centerX" id="CYd-b4-bam"/>
-                                        <constraint firstItem="ukf-Ug-sG2" firstAttribute="leading" secondItem="FgF-BZ-zy2" secondAttribute="leadingMargin" id="Fz0-ME-EkK"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="ukf-Ug-sG2" secondAttribute="trailing" id="Pov-OG-bba"/>
-                                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="gH8-OG-o4d" secondAttribute="trailing" id="doT-04-fQY"/>
-                                        <constraint firstItem="ukf-Ug-sG2" firstAttribute="top" secondItem="FgF-BZ-zy2" secondAttribute="topMargin" id="efd-dj-7zY"/>
-                                        <constraint firstItem="gH8-OG-o4d" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="FgF-BZ-zy2" secondAttribute="leading" id="mlP-xd-P6L"/>
-                                        <constraint firstAttribute="bottom" secondItem="gH8-OG-o4d" secondAttribute="bottom" constant="5" id="vTf-QE-NvK"/>
+                                        <constraint firstItem="ZEb-FL-RiD" firstAttribute="centerY" secondItem="yiX-qL-YhZ" secondAttribute="centerY" id="2f1-g3-Cpo"/>
+                                        <constraint firstItem="ZEb-FL-RiD" firstAttribute="centerX" secondItem="yiX-qL-YhZ" secondAttribute="centerX" id="pyh-Bh-PNv"/>
                                     </constraints>
                                     <connections>
-                                        <outlet property="playerNameLabel" destination="ukf-Ug-sG2" id="Hpv-5B-YV7"/>
-                                        <outlet property="totalScoreHeader" destination="gH8-OG-o4d" id="iVM-ll-5h4"/>
+                                        <outlet property="label" destination="ZEb-FL-RiD" id="hYl-eA-rRD"/>
                                     </connections>
                                 </collectionReusableView>
                                 <connections>
@@ -240,11 +274,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kon-cy-Y4d" firstAttribute="bottom" secondItem="Yyo-pn-duV" secondAttribute="bottom" id="8at-AQ-hni"/>
+                            <constraint firstItem="BCm-Dv-5Qz" firstAttribute="leading" secondItem="kon-cy-Y4d" secondAttribute="leading" id="YWW-an-AIh"/>
                             <constraint firstItem="Yyo-pn-duV" firstAttribute="trailing" secondItem="kon-cy-Y4d" secondAttribute="trailing" id="c83-UA-5Al"/>
                             <constraint firstItem="Yyo-pn-duV" firstAttribute="leading" secondItem="kon-cy-Y4d" secondAttribute="leading" id="iYz-mm-G8d"/>
+                            <constraint firstItem="kon-cy-Y4d" firstAttribute="trailing" secondItem="BCm-Dv-5Qz" secondAttribute="trailing" id="kDc-hu-8pc"/>
                             <constraint firstItem="QBp-W3-5P8" firstAttribute="leading" secondItem="kon-cy-Y4d" secondAttribute="leading" id="kjq-Ch-0Qc"/>
                             <constraint firstItem="kon-cy-Y4d" firstAttribute="trailing" secondItem="QBp-W3-5P8" secondAttribute="trailing" id="mum-0l-1u0"/>
                             <constraint firstItem="QBp-W3-5P8" firstAttribute="top" secondItem="kon-cy-Y4d" secondAttribute="top" id="qjh-yc-OZA"/>
+                            <constraint firstItem="BCm-Dv-5Qz" firstAttribute="top" secondItem="QBp-W3-5P8" secondAttribute="bottom" id="yiQ-wT-1JW"/>
                             <constraint firstItem="Yyo-pn-duV" firstAttribute="top" secondItem="QBp-W3-5P8" secondAttribute="bottom" id="yni-mu-Hp0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="kon-cy-Y4d"/>
@@ -275,7 +312,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LvJ-s5-ImZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3665" y="842"/>
+            <point key="canvasLocation" x="3664.8000000000002" y="841.52923538230891"/>
         </scene>
         <!--Modify Points View Controller-->
         <scene sceneID="LgO-4k-ybg">

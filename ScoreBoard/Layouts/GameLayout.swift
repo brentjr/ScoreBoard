@@ -20,22 +20,10 @@ class GameLayout: UICollectionViewLayout {
 
     private var contentHeight: CGFloat = 0
     private var contentWidth: CGFloat = 0
-    
-    private var headerHeight: CGFloat = 60
-    private var itemHeight: CGFloat = 30
-    private var sectionWidth: CGFloat {
-        guard let collectionView = collectionView else {
-            return 0
-        }
-        let fullWidth = collectionView.bounds.width - (collectionView.contentInset.left + collectionView.contentInset.right)
-        
-        if collectionView.numberOfSections <= 5 {
-            return fullWidth / CGFloat(collectionView.numberOfSections)
-        } else {
-            return fullWidth / 6
-        }
-    }
-    
+
+    private var headerHeight: CGFloat = 30
+    private var itemHeight: CGFloat = 60
+
     override var collectionViewContentSize: CGSize {
         return CGSize(width: contentWidth, height: contentHeight)
     }
@@ -66,22 +54,35 @@ class GameLayout: UICollectionViewLayout {
         
         var xOffset = [CGFloat]()
         for section in 0 ..< collectionView.numberOfSections {
-            xOffset.append(CGFloat(section) * sectionWidth)
+            if section == 0  {
+                xOffset.append(0)
+            } else {
+                xOffset.append(xOffset[section - 1] + CGFloat(widthFor(section: section - 1)))
+            }
         }
         var yOffset = [CGFloat](repeating: headerHeight, count: collectionView.numberOfSections)
         
         for section in 0 ..< collectionView.numberOfSections {
-            
+
             let sectionHeaderAttributes = UICollectionViewLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: section))
-            sectionHeaderAttributes.frame = CGRect(x: xOffset[section], y: 0, width: sectionWidth, height: headerHeight)
-            sectionHeaderAttributes.zIndex = 1
+
+            if section == 0 {
+                sectionHeaderAttributes.frame = CGRect(x: xOffset[section], y: 0, width: CGFloat(widthFor(section: section)), height: headerHeight)
+                sectionHeaderAttributes.zIndex = 3
+            } else {
+                sectionHeaderAttributes.frame = CGRect(x: xOffset[section], y: 0, width: CGFloat(widthFor(section: section)), height: headerHeight)
+                sectionHeaderAttributes.zIndex = 2
+            }
             cache[.sectionHeader]?[IndexPath(item: 0, section: section)] = sectionHeaderAttributes
-            
+
             for item in 0 ..< collectionView.numberOfItems(inSection: section) {
                 
                 let indexPath = IndexPath(item: item, section: section)
                 let attributes = UICollectionViewLayoutAttributes(forCellWith: indexPath)
-                attributes.frame = CGRect(x: xOffset[section], y: yOffset[section], width: sectionWidth, height: itemHeight)
+                attributes.frame = CGRect(x: xOffset[section], y: yOffset[section], width: CGFloat(widthFor(section: section)), height: itemHeight)
+                if indexPath.section == 0 {
+                    attributes.zIndex = 1
+                }
 
                 cache[.cell]?[indexPath] = attributes
                 
@@ -91,7 +92,7 @@ class GameLayout: UICollectionViewLayout {
             }
         }
     }
-    
+
     override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         return cache[.sectionHeader]?[indexPath]
     }
@@ -117,10 +118,23 @@ class GameLayout: UICollectionViewLayout {
         }
         return visibleLayoutAttributes
     }
-    
+
     private func updateSupplementaryViews(_ type: Element, attributes: UICollectionViewLayoutAttributes, collectionView: UICollectionView, indexPath: IndexPath) {
-        if type == .sectionHeader {
+        if indexPath.section == 0 && type == .sectionHeader {
+            attributes.transform = CGAffineTransform(translationX: collectionView.contentOffset.x, y: collectionView.contentOffset.y)
+        } else if indexPath.section == 0 {
+            attributes.transform = CGAffineTransform(translationX: collectionView.contentOffset.x, y: 0)
+        } else if type == .sectionHeader {
             attributes.transform = CGAffineTransform(translationX: 0, y: collectionView.contentOffset.y)
         }
     }
+
+    private func widthFor(section: Int) -> Int {
+        if section == 0 {
+            return 120
+        } else {
+            return 40
+        }
+    }
+
 }

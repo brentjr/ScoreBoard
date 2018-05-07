@@ -54,6 +54,17 @@ extension GameViewController {
 extension GameViewController: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
+        guard let game = game else {
+            return 0
+        }
+        var pointsCount = largestPoints() + 1
+        if !game.isComplete || pointsCount == 0 {
+            pointsCount += 1
+        }
+        return pointsCount
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let playerCount = game?.players?.count ?? 0
         if playerCount == 0 {
             let messageLbl = UILabel(frame: CGRect(x: 0, y: 0, width: collectionView.bounds.size.width, height: collectionView.bounds.size.height))
@@ -63,46 +74,43 @@ extension GameViewController: UICollectionViewDataSource {
             messageLbl.sizeToFit()
             collectionView.backgroundView = messageLbl
         } else {
-        
-            collectionView.backgroundView = nil 
+            collectionView.backgroundView = nil
         }
         return playerCount
     }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let game = game else {
-            return 0
-        }
-        var pointsCount = largestPoints()
-        if !game.isComplete || pointsCount == 0 {
-            pointsCount += 1
-        }
-        return pointsCount
-    }
-    
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.CellIds.gameHeader, for: indexPath) as! GameSectionHeader
-        sectionHeader.player = getPlayerForSection(indexPath.section)
+        let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.CellIds.gameSectionHeader, for: indexPath) as! GameSectionHeader
+        if indexPath.section == 0 {
+            sectionHeader.label.text = "Score Total"
+        } else {
+            sectionHeader.label.text = "\(indexPath.section)"
+        }
         return sectionHeader
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         var cell: UICollectionViewCell
 
         guard let game = game else {
             return UICollectionViewCell()
         }
-        
-        let points = getPlayerForSection(indexPath.section)?.points ?? []
-        
-        if (game.isComplete && indexPath.item == points.count) || (indexPath.item > points.count) {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.gameItem, for: indexPath as IndexPath)
+
+        let player = getPlayerForSection(indexPath.item)
+        let points = player?.points ?? []
+        let lastPointIndex = points.count + 1
+
+        if indexPath.section == 0 {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.gameTotalScore, for: indexPath)
+            (cell as! GameTotalScoreCell).player = player
+        } else if (game.isComplete && indexPath.section == lastPointIndex) || (indexPath.section > lastPointIndex) {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.gameItem, for: indexPath)
             (cell as! GameItemCell).label.text = ""
-        } else if indexPath.item < points.count {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.gameItem, for: indexPath as IndexPath)
-            (cell as! GameItemCell).label.text = "\(points[indexPath.item])"
+        } else if indexPath.section < lastPointIndex {
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.gameItem, for: indexPath)
+            (cell as! GameItemCell).label.text = "\(points[indexPath.section - 1])"
         } else {
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.gameAddPoints, for: indexPath as IndexPath)
+            cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.CellIds.gameAddPoints, for: indexPath)
         }
         
         let border = CALayer()
@@ -116,14 +124,18 @@ extension GameViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegate
 extension GameViewController: UICollectionViewDelegate {
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+            return
+        }
         guard let cell = collectionView.cellForItem(at: indexPath) else {
             return
         }
         
         let vc = UIStoryboard(name: Constants.StoryboardNames.main, bundle: nil).instantiateViewController(withIdentifier: Constants.StoryboardIds.modifyPoints) as! ModifyPointsViewController
-        if let points = getPlayerForSection(indexPath.section)?.points, indexPath.row < points.count {
-            vc.originalValue = points[indexPath.row]
+        if let points = getPlayerForSection(indexPath.item)?.points, indexPath.section < points.count + 1 {
+            vc.originalValue = points[indexPath.section - 1]
 
         }
         vc.delegate = self
@@ -148,11 +160,11 @@ extension GameViewController: UIPopoverPresentationControllerDelegate, ModifyPoi
     }
     
     func pointsDeleted() {
-        guard let game = game, let indexPath = collectionView.indexPathsForSelectedItems?[0], let player = getPlayerForSection(indexPath.section) else {
+        guard let game = game, let indexPath = collectionView.indexPathsForSelectedItems?[0], let player = getPlayerForSection(indexPath.item) else {
             return
         }
-        if var points = player.points, indexPath.item < points.count {
-            points.remove(at: indexPath.item)
+        if var points = player.points, indexPath.section < points.count {
+            points.remove(at: indexPath.section - 1)
             player.points = points
             GameService.shared.saveGame(game)
             collectionView.reloadData()
@@ -160,12 +172,12 @@ extension GameViewController: UIPopoverPresentationControllerDelegate, ModifyPoi
     }
     
     func pointsModified(value: Int) {
-        guard let game = game, let indexPath = collectionView.indexPathsForSelectedItems?[0], let player = getPlayerForSection(indexPath.section) else {
+        guard let game = game, let indexPath = collectionView.indexPathsForSelectedItems?[0], let player = getPlayerForSection(indexPath.item) else {
             return
         }
         
-        if var points = player.points, indexPath.item < points.count {
-            points[indexPath.item] = value
+        if var points = player.points, indexPath.section < points.count {
+            points[indexPath.section - 1] = value
             player.points = points
         } else if var points = player.points {
             points.append(value)

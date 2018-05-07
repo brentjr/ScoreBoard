@@ -16,7 +16,8 @@ struct Constants {
     
     struct CellIds {
         static let gameListTable = "activeGamesTableViewCellID"
-        static let gameHeader = "activeGameSectionHeaderID"
+        static let gameSectionHeader = "gameSectionHeaderID"
+        static let gameTotalScore = "gameTotalScoreCellID"
         static let gameItem = "activeGameItemCellID"
         static let gameAddPoints = "activeGameAddPointsCell"
         static let createGamePlayersTable = "playerTableViewCellID"

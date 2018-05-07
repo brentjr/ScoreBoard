@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4E0DB25B20A0E25C0049F459 /* TimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0DB25A20A0E25C0049F459 /* TimerViewController.swift */; };
 		4E0FEC832002BE71008130ED /* ModifyPointsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FEC822002BE71008130ED /* ModifyPointsViewController.swift */; };
 		4E0FEC8720040DDC008130ED /* ModifyPointsItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E0FEC8620040DDC008130ED /* ModifyPointsItemCell.swift */; };
 		4E4A3C9D209F8F9A001C3549 /* GameSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E4A3C9C209F8F9A001C3549 /* GameSectionHeader.swift */; };
@@ -55,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4E0DB25A20A0E25C0049F459 /* TimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerViewController.swift; sourceTree = "<group>"; };
 		4E0FEC822002BE71008130ED /* ModifyPointsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPointsViewController.swift; sourceTree = "<group>"; };
 		4E0FEC8620040DDC008130ED /* ModifyPointsItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifyPointsItemCell.swift; sourceTree = "<group>"; };
 		4E4A3C9C209F8F9A001C3549 /* GameSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSectionHeader.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				4E9BD5041FFC461400563C58 /* GameViewController.swift */,
 				4ED1A7F81FFACE7B0010CA4E /* CreateGameViewController.swift */,
 				4E0FEC822002BE71008130ED /* ModifyPointsViewController.swift */,
+				4E0DB25A20A0E25C0049F459 /* TimerViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -385,6 +388,7 @@
 				4ED1A7EA1FF8A5490010CA4E /* Player+CoreDataProperties.swift in Sources */,
 				4EF890E01FFEED5800E42E36 /* GameTotalScoreCell.swift in Sources */,
 				4E756E791FF83A7A00B9B37B /* ScoreBoard.xcdatamodeld in Sources */,
+				4E0DB25B20A0E25C0049F459 /* TimerViewController.swift in Sources */,
 				4E4A3C9D209F8F9A001C3549 /* GameSectionHeader.swift in Sources */,
 				4E723B212065618600877973 /* Game+CoreDataProperties.swift in Sources */,
 				4EFF5C922000357A007AFD3F /* GameAddPointsCell.swift in Sources */,

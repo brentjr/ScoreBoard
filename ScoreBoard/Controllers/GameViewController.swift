@@ -147,7 +147,6 @@ extension GameViewController: UICollectionViewDelegate {
         popover.delegate = self
         popover.sourceView = cell
         popover.sourceRect = cell.bounds
-//        popover.permittedArrowDirections = [.left, .right]
         present(vc, animated: true, completion: nil)
     }
 }
@@ -216,6 +215,19 @@ private extension GameViewController {
         setGameCompleteStatus(isComplete: game.isComplete, animated: true)
         let notificationDict: [String: Game] = [Constants.NotificationKeys.game: game]
         NotificationCenter.default.post(name: .gameEdited, object: self, userInfo: notificationDict)
+    }
+
+    @IBAction func timerBtnTapped(_ sender: Any) {
+        let vc = UIStoryboard(name: Constants.StoryboardNames.main, bundle: nil).instantiateViewController(withIdentifier: Constants.StoryboardIds.timer) as! TimerViewController
+        vc.modalPresentationStyle = .popover
+        vc.preferredContentSize = CGSize(width: 250, height: 350)
+
+        let popover = vc.popoverPresentationController!
+        popover.delegate = self
+        popover.sourceView = self.view
+        popover.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+        popover.permittedArrowDirections = UIPopoverArrowDirection.init(rawValue: 0)
+        present(vc, animated: true, completion: nil)
     }
 }
 

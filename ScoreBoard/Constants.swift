@@ -35,5 +35,6 @@ struct Constants {
     
     struct StoryboardIds {
         static let modifyPoints = "modifyPointsViewController"
+        static let timer = "timerViewController"
     }
 }

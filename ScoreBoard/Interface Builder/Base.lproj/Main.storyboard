@@ -287,13 +287,17 @@
                         <viewLayoutGuide key="safeArea" id="kon-cy-Y4d"/>
                     </view>
                     <toolbarItems>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Ftb-T5-bmw"/>
+                        <barButtonItem title="Timer" image="timer-icon" id="YLC-QD-t0S">
+                            <connections>
+                                <action selector="timerBtnTapped:" destination="lRe-Lh-a63" id="1vJ-XA-o93"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="A0X-Zx-hpa"/>
                         <barButtonItem title="End Game" id="jpQ-x5-XKt">
                             <connections>
                                 <action selector="gameCompletionBtnTapped:" destination="lRe-Lh-a63" id="Dmy-Ac-kP5"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem style="plain" systemItem="flexibleSpace" id="SnY-vd-i3b"/>
                     </toolbarItems>
                     <navigationItem key="navigationItem" title="Game" id="86u-8S-0P5">
                         <barButtonItem key="rightBarButtonItem" title="Item" image="settings-icon" id="eoA-wN-2nj">
@@ -430,6 +434,105 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lm9-yG-xT8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4503" y="842"/>
+        </scene>
+        <!--Timer View Controller-->
+        <scene sceneID="50k-B1-hxT">
+            <objects>
+                <viewController storyboardIdentifier="timerViewController" id="q8k-qv-csl" customClass="TimerViewController" customModule="ScoreBoard" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="g29-UB-Pyp">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TEy-KB-n8U">
+                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="ira-Mg-YFG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wtL-TQ-RyU">
+                                <rect key="frame" x="0.0" y="80" width="375" height="293.5"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="as8-qV-4Cr">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="293.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ako-yb-URg">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="293"/>
+                                    </pickerView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="as8-qV-4Cr" secondAttribute="bottom" id="JoZ-sE-bau"/>
+                                    <constraint firstItem="ako-yb-URg" firstAttribute="top" secondItem="wtL-TQ-RyU" secondAttribute="top" id="PtZ-DC-HgK"/>
+                                    <constraint firstAttribute="trailing" secondItem="ako-yb-URg" secondAttribute="trailing" id="VAQ-ux-p4h"/>
+                                    <constraint firstAttribute="bottom" secondItem="ako-yb-URg" secondAttribute="bottom" id="XgJ-HF-Mwx"/>
+                                    <constraint firstItem="as8-qV-4Cr" firstAttribute="top" secondItem="wtL-TQ-RyU" secondAttribute="top" id="buF-Vi-IQu"/>
+                                    <constraint firstItem="as8-qV-4Cr" firstAttribute="leading" secondItem="wtL-TQ-RyU" secondAttribute="leading" id="iLH-7t-ZEJ"/>
+                                    <constraint firstItem="ako-yb-URg" firstAttribute="leading" secondItem="wtL-TQ-RyU" secondAttribute="leading" id="mEb-5Q-8al"/>
+                                    <constraint firstAttribute="trailing" secondItem="as8-qV-4Cr" secondAttribute="trailing" id="yoJ-2p-kxo"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJA-T4-KGo">
+                                <rect key="frame" x="0.0" y="373.5" width="375" height="293.5"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cjz-Os-5kZ">
+                                        <rect key="frame" x="0.0" y="50" width="375" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Start"/>
+                                        <connections>
+                                            <action selector="startButtonTapped:" destination="q8k-qv-csl" eventType="touchUpInside" id="xWX-Fq-Hnq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u9B-gL-8X0">
+                                        <rect key="frame" x="0.0" y="99" width="375" height="39"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Cancel"/>
+                                        <connections>
+                                            <action selector="resetButtonTapped:" destination="q8k-qv-csl" eventType="touchUpInside" id="b0o-kX-JlZ"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Cjz-Os-5kZ" firstAttribute="top" secondItem="wJA-T4-KGo" secondAttribute="top" constant="50" id="FWH-IF-l4o"/>
+                                    <constraint firstItem="u9B-gL-8X0" firstAttribute="leading" secondItem="wJA-T4-KGo" secondAttribute="leading" id="HaP-ib-aE9"/>
+                                    <constraint firstItem="u9B-gL-8X0" firstAttribute="top" secondItem="Cjz-Os-5kZ" secondAttribute="bottom" constant="10" id="KLj-Wk-qAB"/>
+                                    <constraint firstAttribute="trailing" secondItem="u9B-gL-8X0" secondAttribute="trailing" id="VUs-KK-pfk"/>
+                                    <constraint firstItem="Cjz-Os-5kZ" firstAttribute="leading" secondItem="wJA-T4-KGo" secondAttribute="leading" id="e4v-bn-Gvm"/>
+                                    <constraint firstAttribute="trailing" secondItem="Cjz-Os-5kZ" secondAttribute="trailing" id="eLN-h0-xBI"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="u9B-gL-8X0" secondAttribute="bottom" id="poz-r5-HRJ"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="wJA-T4-KGo" firstAttribute="top" secondItem="wtL-TQ-RyU" secondAttribute="bottom" id="3e8-QA-ayc"/>
+                            <constraint firstItem="wtL-TQ-RyU" firstAttribute="leading" secondItem="pmc-KG-Tp3" secondAttribute="leading" id="91i-yz-K4g"/>
+                            <constraint firstItem="pmc-KG-Tp3" firstAttribute="trailing" secondItem="TEy-KB-n8U" secondAttribute="trailing" id="A8b-S2-Zz8"/>
+                            <constraint firstItem="wJA-T4-KGo" firstAttribute="leading" secondItem="pmc-KG-Tp3" secondAttribute="leading" id="F1Y-0Y-twr"/>
+                            <constraint firstItem="wtL-TQ-RyU" firstAttribute="top" secondItem="TEy-KB-n8U" secondAttribute="bottom" id="Fab-yj-7kr"/>
+                            <constraint firstItem="wtL-TQ-RyU" firstAttribute="height" secondItem="wJA-T4-KGo" secondAttribute="height" id="Hyw-4N-WZP"/>
+                            <constraint firstItem="wJA-T4-KGo" firstAttribute="trailing" secondItem="pmc-KG-Tp3" secondAttribute="trailing" id="dJZ-tn-kQP"/>
+                            <constraint firstItem="wJA-T4-KGo" firstAttribute="bottom" secondItem="pmc-KG-Tp3" secondAttribute="bottom" id="dxg-KF-Jms"/>
+                            <constraint firstItem="TEy-KB-n8U" firstAttribute="top" secondItem="pmc-KG-Tp3" secondAttribute="top" id="h2E-44-fWH"/>
+                            <constraint firstItem="wJA-T4-KGo" firstAttribute="top" secondItem="wtL-TQ-RyU" secondAttribute="bottom" id="hpt-tA-Smf"/>
+                            <constraint firstItem="TEy-KB-n8U" firstAttribute="leading" secondItem="pmc-KG-Tp3" secondAttribute="leading" id="hvn-7E-m74"/>
+                            <constraint firstItem="wtL-TQ-RyU" firstAttribute="trailing" secondItem="pmc-KG-Tp3" secondAttribute="trailing" id="kLv-6m-kNv"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="pmc-KG-Tp3"/>
+                    </view>
+                    <connections>
+                        <outlet property="startButton" destination="Cjz-Os-5kZ" id="Ifp-VE-QAZ"/>
+                        <outlet property="timePicker" destination="ako-yb-URg" id="sdF-Ut-Mty"/>
+                        <outlet property="timerLabel" destination="as8-qV-4Cr" id="k8P-lW-Bls"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Gkm-wJ-Wav" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4508" y="1537.7811094452775"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="RV0-ON-nid">
@@ -677,6 +780,7 @@
         <image name="plus-icon" width="20" height="20"/>
         <image name="plus-icon-filled" width="30" height="30"/>
         <image name="settings-icon" width="24" height="24"/>
+        <image name="timer-icon" width="32" height="32"/>
     </resources>
     <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
 </document>

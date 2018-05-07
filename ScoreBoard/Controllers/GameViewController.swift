@@ -134,9 +134,8 @@ extension GameViewController: UICollectionViewDelegate {
         }
         
         let vc = UIStoryboard(name: Constants.StoryboardNames.main, bundle: nil).instantiateViewController(withIdentifier: Constants.StoryboardIds.modifyPoints) as! ModifyPointsViewController
-        if let points = getPlayerForSection(indexPath.item)?.points, indexPath.section < points.count + 1 {
+        if let points = getPlayerForSection(indexPath.item)?.points, indexPath.section <= points.count {
             vc.originalValue = points[indexPath.section - 1]
-
         }
         vc.delegate = self
         
@@ -162,7 +161,7 @@ extension GameViewController: UIPopoverPresentationControllerDelegate, ModifyPoi
         guard let game = game, let indexPath = collectionView.indexPathsForSelectedItems?[0], let player = getPlayerForSection(indexPath.item) else {
             return
         }
-        if var points = player.points, indexPath.section < points.count {
+        if var points = player.points, indexPath.section <= points.count {
             points.remove(at: indexPath.section - 1)
             player.points = points
             GameService.shared.saveGame(game)
@@ -175,7 +174,7 @@ extension GameViewController: UIPopoverPresentationControllerDelegate, ModifyPoi
             return
         }
         
-        if var points = player.points, indexPath.section < points.count {
+        if var points = player.points, indexPath.section <= points.count {
             points[indexPath.section - 1] = value
             player.points = points
         } else if var points = player.points {

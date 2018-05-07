@@ -202,9 +202,9 @@
 		4E756EA61FF83C3F00B9B37B /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				4ED1A7F81FFACE7B0010CA4E /* CreateGameViewController.swift */,
 				4E756EA11FF83B3700B9B37B /* GameListViewController.swift */,
 				4E9BD5041FFC461400563C58 /* GameViewController.swift */,
-				4ED1A7F81FFACE7B0010CA4E /* CreateGameViewController.swift */,
 				4E0FEC822002BE71008130ED /* ModifyPointsViewController.swift */,
 				4E0DB25A20A0E25C0049F459 /* TimerViewController.swift */,
 			);

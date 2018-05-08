@@ -136,9 +136,9 @@ private extension GameListViewController {
     
     @objc private func onNewGameCreated(_ notification: NSNotification) {
         if let game = notification.userInfo?[Constants.NotificationKeys.game] as? Game {
-            games.append(game)
-            activeGamesTableView.insertRows(at: [IndexPath(row: games.count - 1, section: 0)], with: .middle)
-            activeGamesTableView.selectRow(at: IndexPath(row: games.count - 1, section: 0), animated: true, scrollPosition: .middle)
+            games.insert(game, at: 0)
+            activeGamesTableView.insertRows(at: [IndexPath(row: 0, section: 0)], with: .middle)
+            activeGamesTableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .middle)
             performSegue(withIdentifier: Constants.SegueIds.game, sender: self)
             tabBarController?.selectedIndex = 0
         }

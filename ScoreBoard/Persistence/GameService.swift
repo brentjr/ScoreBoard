@@ -56,7 +56,7 @@ final class GameService {
     func activeGames() -> [Game] {
         let fetchRequest = NSFetchRequest<Game>(entityName: "Game")
         fetchRequest.predicate = NSPredicate(format: "isArchived == NO")
-        let sort = NSSortDescriptor(key: #keyPath(Game.createdDate), ascending: true)
+        let sort = NSSortDescriptor(key: #keyPath(Game.createdDate), ascending: false)
         fetchRequest.sortDescriptors = [sort]
         do {
             return try persistentContainer.viewContext.fetch(fetchRequest)

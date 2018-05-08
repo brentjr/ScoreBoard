@@ -26,7 +26,6 @@ struct Constants {
     
     struct SegueIds {
         static let game = "activeGameSegue"
-        static let createGame = "createGameModal"
     }
     
     struct StoryboardNames {
@@ -34,6 +33,7 @@ struct Constants {
     }
     
     struct StoryboardIds {
+        static let createGame = "createGameModal"
         static let modifyPoints = "modifyPointsViewController"
         static let timer = "timerViewController"
     }

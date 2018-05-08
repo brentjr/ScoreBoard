@@ -51,7 +51,7 @@ extension GameListViewController {
 extension GameListViewController {
     
     @IBAction func newGameBtnTapped(_ sender: Any) {
-        let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "createGameModal")
+        let vc = UIStoryboard(name: Constants.StoryboardNames.main, bundle: nil).instantiateViewController(withIdentifier: Constants.StoryboardIds.createGame)
         vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         vc.modalTransitionStyle = UIModalTransitionStyle.coverVertical
         present(vc, animated: true, completion: nil)

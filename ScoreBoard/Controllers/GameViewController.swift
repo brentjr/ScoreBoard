@@ -197,7 +197,7 @@ private extension GameViewController {
             return
         }
         
-        let vc = UIStoryboard(name: Constants.StoryboardNames.main, bundle: nil).instantiateViewController(withIdentifier: Constants.SegueIds.createGame) as! UINavigationController
+        let vc = UIStoryboard(name: Constants.StoryboardNames.main, bundle: nil).instantiateViewController(withIdentifier: Constants.StoryboardIds.createGame) as! UINavigationController
         (vc.viewControllers[0] as! CreateGameViewController).game = game
         vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
         vc.modalTransitionStyle = UIModalTransitionStyle.coverVertical
